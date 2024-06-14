@@ -18,7 +18,7 @@ const GPTStream = () => {
     const [input, setInput] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const messagesEndRef = useRef(null);
-    const inputRef = useRef();
+    const inputRef = useRef(null);
 
     const getGPTResponse = async () => {
         try {
@@ -52,24 +52,38 @@ const GPTStream = () => {
                 ]);
             }
 
-            } catch (err) {
-                console.error('Error:', err);
+        } catch (err) {
+            console.error('Error:', err);
         } finally {
             setIsLoading(false);
         }
     };
 
     const handleSend = async () => {
-        setMessages([
-            ...messages,
-            { 'role': 'user', 'content': input },
-        ]);
 
         if (input.trim() && !isLoading) {
+            setMessages([
+                ...messages,
+                { 'role': 'user', 'content': input },
+            ]);
             setIsLoading(true);
             getGPTResponse();
         }
         setInput('');
+        inputRef.current.style.height = 'auto';
+    }
+
+    const handleInputChange = (e) => {
+        setInput(e.target.value);
+        inputRef.current.style.height = 'auto';
+        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+    }
+
+    const handleKeyPress = (e) => {
+        if (e.key === 'Enter' && !e.shiftKey && !isLoading && input.trim()) {
+            e.preventDefault();
+            handleSend();
+        }
     }
 
     const scrollToBottom = () => {
@@ -95,15 +109,18 @@ const GPTStream = () => {
                 <div ref={messagesEndRef}></div>
             </div>
             <div className="input-area">
-                <input
-                    type="text"
+                <textarea
                     value={input}
-                    onChange={(e) => setInput(e.target.value)}
-                    onKeyUp={(e) => e.key === 'Enter' && handleSend()}
-                    disabled={isLoading}
+                    onChange={handleInputChange}
+                    onKeyDown={handleKeyPress}
+                    // disabled={isLoading}
                     ref={inputRef}
+                    rows='1'
                 />
-                <button onClick={handleSend}>입력</button>
+                <button
+                    onClick={handleSend}
+                    disabled={isLoading}
+                >입력</button>
             </div>
         </div>
     );

@@ -49,12 +49,15 @@
     padding: 10px;
 }
 
-input {
+textarea {
     flex: 1;
     padding: 5px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    resize: none;
 }
 
 button {
@@ -64,6 +67,11 @@ button {
     color: white;
     border-radius: 5px;
     cursor: pointer;
+}
+
+button:disabled {
+    background-color: #0056b3;
+    cursor: default;
 }
 
 button:hover {
