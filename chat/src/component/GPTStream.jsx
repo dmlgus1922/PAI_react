@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 import OpenAI from "openai";
 import MarkdownViewer from "./MarkdownViewer";
 import "../css/GPTStream.css"
+import gptLogo from '../images/gpt_logo.png';
 
 // 서버 없이 클라이언트에서 바로 key를 적용, openai API 연동해보기
 const openAIKey = '';
@@ -101,7 +102,10 @@ const GPTStream = () => {
                 {messages.map((msg, idx) => (
                     <div key={idx} className={`message ${msg.role}`}>
                         {msg.role === 'assistant' ?
-                            <MarkdownViewer markdownText={msg.content}></MarkdownViewer> :
+                            <>
+                                <img className="gpt-logo" src={gptLogo}></img>
+                                <MarkdownViewer markdownText={msg.content}></MarkdownViewer>
+                            </> :
                             msg.content
                         }
                     </div>
