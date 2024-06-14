@@ -20,24 +20,28 @@
 .message {
     padding: 10px;
     margin: 10px 0;
-    background-color: #f1f1f1;
     border-radius: 10px;
     width: fit-content;
-    max-width: 60%;
     word-wrap: break-word;
-    white-space: pre-line;
+    /* white-space: pre-line; */
 }
 
 .user {
     align-self: flex-end;
     text-align: left;
     justify-content: flex-end;
+    max-width: 80%;
+    background-color: #f1f1f1;
 }
 
 .assistant {
     align-self: flex-start;
     text-align: left;
     justify-content: flex-start;
+    max-width: 100%;
+    display: flex;
+    flex-direction: row;
+    background-color: #e6e6e6;
 }
 
 .system {
@@ -49,12 +53,21 @@
     padding: 10px;
 }
 
-input {
+.gpt-logo {
+    width: 35px;
+    height: 35px;
+    margin-right: 10px;
+}
+
+textarea {
     flex: 1;
     padding: 5px;
     margin-right: 10px;
     border: 1px solid #ccc;
     border-radius: 5px;
+    box-sizing: border-box;
+    overflow: hidden;
+    resize: none;
 }
 
 button {
@@ -66,10 +79,15 @@ button {
     cursor: pointer;
 }
 
+button:disabled {
+    background-color: #0056b3;
+    cursor: default;
+}
+
 button:hover {
     background-color: #0056b3
 }
 
 p {
-    margin: 0px;
+    margin: 5px 0px 0px 0px;
 }
