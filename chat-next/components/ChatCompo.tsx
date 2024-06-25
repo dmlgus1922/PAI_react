@@ -43,10 +43,8 @@ const ChatCompo = () => {
             // setIsWsConnected(true);
         };
         // onmessage 때마다 messages상태가 바뀌어야 함
-        // 첫 onmessage 이후 ㄹ
         socket.onmessage = (event) => {
             const msg = event.data;
-            console.log('received_msg:', msg, '  시각:', Date.now(), '\ninput:', input);
             if (msg !== 'hcx finished') {
                 // setHcxContent(msg);
                 const msgData = JSON.parse(msg)
@@ -63,15 +61,13 @@ const ChatCompo = () => {
             console.log('disconnected from server');
             setIsWsConnected(!isWsConnected);
             setInput('');
-            // console.log(messages);
-        
         }
 
     }, [isWsConnected, hcxContent]);
 
     useEffect(() => {
         scrollToBottom();
-        inputRef.current.focus();
+        inputRef.current?.focus();
         
     }, [messages]);
 
@@ -98,16 +94,20 @@ const ChatCompo = () => {
             getHCXResponse();
         }
         setInput('');
-        inputRef.current.style.height = 'auto';
+        if (inputRef.current){
+            inputRef.current.style.height = 'auto';
+        }
     }
 
-    const handleInputChange = (e) => {
+    const handleInputChange = (e: any) => {
         setInput(e.target.value);
-        inputRef.current.style.height = 'auto';
-        inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+        if (inputRef.current) {
+            inputRef.current.style.height = 'auto';
+            inputRef.current.style.height = `${inputRef.current.scrollHeight}px`;
+        }
     }
 
-    const handleKeyPress = (e) => {
+    const handleKeyPress = (e: any) => {
         if (e.key === 'Enter' && !e.shiftKey && !isLoading && input.trim()) {
             e.preventDefault();
             handleSend();
